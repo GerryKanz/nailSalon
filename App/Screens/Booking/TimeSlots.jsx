@@ -5,7 +5,6 @@ import TimeSlotsData from './timeSlotsData';
 import { useNavigation } from '@react-navigation/native';
 import dataAPI from '../../DataAPI/dataAPI';
 
-
 const screen = Dimensions.get('screen')
 const timeSlotsData = TimeSlotsData()
 
