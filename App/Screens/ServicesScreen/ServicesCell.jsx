@@ -22,21 +22,27 @@ const device = Dimensions.get('window')
 export default function Services({ route }) {
 
     const [services, setServices] = useState([])
+    const [price, setPrice] = useState()
+    const [duration, setDuration] = useState()
 
     const navigation = useNavigation()
     const data = Data()
 
+    //wrap navigation in useEffect to only navigate when needed variables are populated
     useEffect(() => {
         if (services.length > 0) {
             navigation.navigate('seleted_services', {
-                services: services
+                services: services, duration: duration, price: price
             });
             console.log('state after useEffect: ', services)
+
         }
     }, [services, navigation]);
 
-    const addService = (title) => {
-        setServices(prevService => [...prevService, title])
+    // set variables to be passed to selected services page on navigation 
+    const addService = (service) => {
+        const servicesData = { "title": service[0], "price": service[1], "duration": service[2] }
+        setServices(prevService => [...prevService, servicesData])
     }
 
     return (
@@ -54,7 +60,7 @@ export default function Services({ route }) {
                                                 // navigates to booking screen
                                                 cellContentView={
                                                     <TouchableOpacity onPress={() =>
-                                                        addService(cell.title)
+                                                        addService([cell.title, cell.price, cell.serviceDuration])
                                                     }
                                                         style={styles.menuCells}>
                                                         <View style={styles.menuCellsText}>
@@ -63,7 +69,7 @@ export default function Services({ route }) {
 
                                                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                                                 <Text style={styles.priceTag}>{cell.price}</Text>
-                                                                <Text style={styles.priceTag}>30 min</Text>
+                                                                <Text style={styles.priceTag}>{cell.serviceDuration} min</Text>
                                                             </View>
                                                         </View>
 

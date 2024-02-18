@@ -13,8 +13,9 @@ export default function Data() {
                         "discription": [
                             "Most popular and well known option"
                         ],
-                        "price": ['$$$'
-                        ]
+                        "price": ['$30'
+                        ],
+                        "serviceDuration": 60
                     },
                     {
                         "title": [
@@ -24,7 +25,8 @@ export default function Data() {
                             "Add on to standard pedicure, uses paraffin wax to moisturise and soften the feet"
                         ],
                         "price": ['$30'
-                        ]
+                        ],
+                        "serviceDuration": 30
                     },
                     {
                         "title": [
@@ -34,7 +36,8 @@ export default function Data() {
                             "A perfect slurge if you want something more luxurious"
                         ],
                         "price": ['$60'
-                        ]
+                        ],
+                        "serviceDuration": 60
                     }
                 ]
             },
@@ -49,7 +52,8 @@ export default function Data() {
                             "Enim nostrud pariatur consectetur magna aute incididuntr."
                         ],
                         "price": ['$$$'
-                        ]
+                        ],
+                        "serviceDuration": 30
                     },
                     {
                         "title": [
@@ -59,7 +63,8 @@ export default function Data() {
                             "Occaecat id amet laboris quis nisi cillum."
                         ],
                         "price": ['$$$'
-                        ]
+                        ],
+                        "serviceDuration": 60
                     },
                     {
                         "title": [
@@ -69,7 +74,8 @@ export default function Data() {
                             "Dolore eu Lorem deserunt proident eu labore consequat officia pariatur sunt."
                         ],
                         "price": ['$$$'
-                        ]
+                        ],
+                        "serviceDuration": 30
                     }
                 ]
             },
@@ -84,7 +90,8 @@ export default function Data() {
                             "In do esse velit incididunt anim esse et officia."
                         ],
                         "price": ['$$$'
-                        ]
+                        ],
+                        "serviceDuration": 30
                     },
                     {
                         "title": [
@@ -94,7 +101,8 @@ export default function Data() {
                             "Enim nostrud pariatur consectetur magna aute incididuntr."
                         ],
                         "price": ['$$$'
-                        ]
+                        ],
+                        "serviceDuration": 30
                     },
                     {
                         "title": [
@@ -104,7 +112,8 @@ export default function Data() {
                             "Incididunt sint commodo pariatur sunt sint est."
                         ],
                         "price": ['$$$'
-                        ]
+                        ],
+                        "serviceDuration": 30
                     }
                 ]
             }

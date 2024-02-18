@@ -5,7 +5,7 @@ import HomeScreen from '../Screens/HomeScreen/HomeScreen';
 import ServicesScreen from '../Screens/ServicesScreen/Services';
 import SelectedServicesScreen from '../Screens/SelectedServicesSreen/SelectedServices'
 import BookingScreen from '../Screens/Booking/Booking';
-import ConfirmationScren from '../Screens/ConfirmationScreen/ConfirmationScreen';
+import ConfirmationScreen from '../Screens/ConfirmationScreen/ConfirmationScreen';
 
 const Stack = createStackNavigator()
 
@@ -17,7 +17,8 @@ export default function HomeScreenNav() {
             <Stack.Screen name='services' component={ServicesScreen} />
             <Stack.Screen name='seleted_services' component={SelectedServicesScreen} />
             <Stack.Screen name='booking' component={BookingScreen} />
-            <Stack.Screen name='confirmation' component={ConfirmationScren} />
+            <Stack.Screen name='confirmation' component={ConfirmationScreen} />
+            {/* <Stack.Screen name='userBookingsDisplay' component={UserBookingsScreen} /> */}
         </Stack.Navigator >
     )
 }

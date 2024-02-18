@@ -7,10 +7,13 @@ import TimeSlots from './TimeSlots';
 
 const screen = Dimensions.get('screen')
 
-export default function BookingScreen({ navigation }) {
+export default function BookingScreen({ route, navigation }) {
+    const { services } = route.params
+
     const [date, setDate] = useState()
     const [time, setTime] = useState()
 
+    // this will be called as prop in timeslot component to pass data from child to parent 
     const getTimeCallBack = (timeSelected) => {
         return (
             setTime(timeSelected)
@@ -36,7 +39,7 @@ export default function BookingScreen({ navigation }) {
                         <View style={styles.DateAndTimeContainer}>
                             <ScrollView>
                                 {/* <Calendar handleGetDateCallBack={getDateCallBack} /> */}
-                                <TimeSlots handleGetTimeCallBack={getTimeCallBack} />
+                                <TimeSlots userServices={services} handleGetTimeCallBack={getTimeCallBack} />
                             </ScrollView>
 
                         </View>

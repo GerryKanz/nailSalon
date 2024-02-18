@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SettingsScreen from '../Screens/SettingsScreen/Settings';
 import HomeScreenNav from './HomeScreenNav';
 import ServicesScreen from '../Screens/ServicesScreen/Services';
+import UserBookingsScreen from '../Screens/UserBookingsScreen/userBookings';
 import { FontAwesome } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 
@@ -29,20 +30,21 @@ export default function NavTab() {
 
             <Tab.Screen options={{
                 tabBarLabel: ({ color }) => (
-                    <Text style={{ color: 'black', fontSize: 12 }}>Settings</Text>
-                ),
-                tabBarIcon: ({ color, size }) => (
-                    <Fontisto name="player-settings" size={size} color={color} />
-                )
-            }} name="Settings" component={SettingsScreen} />
-            <Tab.Screen options={{
-                tabBarLabel: ({ color }) => (
                     <Text style={{ color: 'black', fontSize: 12 }}>Services</Text>
                 ),
                 tabBarIcon: ({ color, size }) => (
-                    <Fontisto name="player-settings" size={size} color={color} />
+                    <FontAwesome name="opencart" size={22} color={color} />
                 )
             }} name="services" component={ServicesScreen} />
+
+            <Tab.Screen options={{
+                tabBarLabel: ({ color }) => (
+                    <Text style={{ color: 'black', fontSize: 12 }}>Your Bookings</Text>
+                ),
+                tabBarIcon: ({ color, size }) => (
+                    <Fontisto name="preview" size={22} color={color} />
+                )
+            }} name="userBookingsDisplay" component={UserBookingsScreen} />
 
 
 

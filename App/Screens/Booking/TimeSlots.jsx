@@ -8,7 +8,8 @@ import dataAPI from '../../DataAPI/dataAPI';
 const screen = Dimensions.get('screen')
 const timeSlotsData = TimeSlotsData()
 
-export default function TimeSlots() {
+export default function TimeSlots(props) {
+    // const userServices = props.userServices
 
     // Declaring react hooks
     const navigation = useNavigation()
@@ -17,40 +18,60 @@ export default function TimeSlots() {
     const [booked, setBooked] = useState([])
     const [availableSlots, setAvailableSlots] = useState({})
 
+    console.log("from props.userServices", props.userServices)
+
     // Gets an array of booked times or unavailable timeslots
     const getTimeSlotsData = () => {
         dataAPI.getBookingsByDate(selectedDate.toISOString().split('T')[0]).then(bookedSlots => {
 
-            let availableBookings = {};
+            let availableBookings = {}
             Object.keys(timeSlotsData).forEach(timeOfDay => {
+
                 availableBookings[timeOfDay] = timeSlotsData[timeOfDay].filter(booking => {
                     // Check if any value of the booking is included in bookedSlots.bookings
-                    return !bookedSlots.bookings.some(booked => Object.values(booked).includes(booking));
-                });
-            });
-
+                    return !bookedSlots.bookings.some(booked => Object.values(booked).includes(booking))
+                })
+            })
             console.log('available bookings', availableBookings)
             setAvailableSlots(availableBookings)
-
         })
     }
-    console.log('available slots', availableSlots)
+    console.log('available bookings', availableSlots)
+
+    //check if there is enough time for a slot to be bookable
+    const adjustTime = (bookedTime) => {
+
+        // Split the time string into hours and minutes
+        let [hours, minutes] = bookedTime.split(":").map(Number);
+
+        // Increment the minutes by 30
+        minutes += 30;
+
+        // Adjust the hours and minutes if the time overlaps into the next hour
+        if (minutes >= 60) {
+            minutes -= 60;
+            hours++;
+        }
+        // add zeros at the end of each adjusted time 
+        hours = String(hours).padStart(2, '0');
+        minutes = String(minutes).padStart(2, '0');
+
+        const result = `${hours}:${minutes}`
+        return (result)
 
 
-
+    }
 
     useEffect(() => {
 
         getTimeSlotsData()
 
+        // navigate to confirmation screen 
         if (selectedDate != undefined & selectedTime != undefined) {
-
-            navigation.navigate('confirmation', { time: selectedTime, date: selectedDate.toISOString().split('T')[0] });
+            navigation.navigate('confirmation', { time: selectedTime, date: selectedDate.toISOString().split('T')[0], userServices: props.userServices });
             console.log('state after useEffect: ', selectedDate)
         }
     }, [selectedDate, selectedTime, navigation]);
-
-    // console.log('These is your official booked array', booked)
 
     return (
         <View>
@@ -71,15 +92,24 @@ export default function TimeSlots() {
                         <Text style={[styles.timeOfDay, styles.stickyHeader]}>{timeOfDay}</Text>
                         <View style={styles.timeSlots}>
 
-                            {/* checks if a slot is in booked slots array, if it is, it will not be displayed */}
+                            {/* checks if a slot is in booked slots array, if it is, then its booked, it will not be displayed */}
                             {availableSlots[timeOfDay].map((time, j) => (
-                                booked.includes(time) ? null : (
-                                    < TouchableOpacity onPress={() => { setTime(time) }}>
+
+                                props.userServices[0].duration > 30 && availableSlots[timeOfDay].includes(adjustTime(time)) ?
+
+                                    (< TouchableOpacity onPress={() => { setTime(time) }}>
                                         <Text key={j} style={styles.timeText}>
                                             {time}
                                         </Text>
-                                    </TouchableOpacity>
-                                )
+                                    </TouchableOpacity>) :
+
+
+                                    props.userServices[0].duration < 60 ?
+                                        (< TouchableOpacity onPress={() => { setTime(time) }}>
+                                            <Text key={j} style={styles.timeText}>
+                                                {time}
+                                            </Text>
+                                        </TouchableOpacity>) : undefined
                             ))}
                         </View>
                     </View>

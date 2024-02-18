@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 const screen = Dimensions.get('screen')
 
 export default function ConfirmationScreen({ route, navigation }) {
-    const { services, price } = route.params;
+    const { services } = route.params;
 
     return (
         <View style={styles.container}>
@@ -22,26 +22,32 @@ export default function ConfirmationScreen({ route, navigation }) {
                         <Text>Your Services</Text>
                     </View>
 
+                    {/* display user selected services  */}
                     <View style={styles.servicesListContainer}>
                         <View>
                             {
                                 services.map((service, i) => (<View style={styles.selectedServicesDisplay}>
-                                    <Text style={styles.text} >{service}</Text>
-                                    <Text style={styles.text} >{price}</Text>
+                                    <Text key={i} style={styles.text} >{service.title}</Text>
+                                    <Text style={styles.text} >{service.duration} min</Text>
+                                    <Text style={styles.text} >{service.price}</Text>
                                 </View>
                                 ))
                             }
                         </View>
                     </View>
 
+                    {/* add services or continue button  */}
                     <View style={styles.buttonsContainer}>
                         <Text>Add another service or continue with these selections.</Text>
                         <View style={styles.buttons}>
+
+                            {/* add services button  */}
                             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                                 <Text style={styles.button}>Add</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('booking')} style={styles.backButton}>
+                            {/* continue button, navigates to the booking screen passing user selected services as a route parameter */}
+                            <TouchableOpacity onPress={() => navigation.navigate('booking', { services: services })} style={styles.backButton}>
                                 <Text style={styles.button}>Continue</Text>
                             </TouchableOpacity>
                         </View>
