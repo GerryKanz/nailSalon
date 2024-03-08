@@ -1,43 +1,52 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import NavTab from './App/Navigations/NavTab';
-import ServicesScreenNav from './App/Navigations/ServicesScreenNav'
+import { Clerk, ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
+import UserAuthentication from './App/Screens/SignInScreen/UserAuthentication';
+import * as SecureStore from "expo-secure-store";
 
 const Stack = createStackNavigator()
 
-function Services({ route, navigation }) {
+const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-  return (
-    <View>
-    </View>
-  )
-}
-
-function Booking({ route, navigation }) {
-
-  return (
-    <View>
-    </View>
-  )
-}
-
-// function NavigationTab() {
-//   return (
-//     <NavTab />
-//   )
-// }
-
-function ServicesNavTab() {
-  return (
-    <ServicesScreenNav />
-  )
-}
+const tokenCache = {
+  async getToken(key) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key, value
+  ) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <NavTab />
-    </NavigationContainer>
+    <ClerkProvider
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+      tokenCache={tokenCache}>
+
+      <SignedIn>
+        <NavigationContainer>
+          <NavTab />
+        </NavigationContainer>
+      </SignedIn>
+
+      <SignedOut>
+        <UserAuthentication />
+      </SignedOut>
+    </ClerkProvider>
   );
 }
+
+
+
+

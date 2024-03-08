@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Calendar from './Calendar';
 import TimeSlots from './TimeSlots';
+import Header from '../../Components/Header';
 
 
 const screen = Dimensions.get('screen')
@@ -30,17 +31,14 @@ export default function BookingScreen({ route, navigation }) {
         <View style={styles.container}>
             <SafeAreaView >
                 <View>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back-outline" size={24} color="black" />
-                        <Text>Booking</Text>
-                    </TouchableOpacity>
+                    <Header name='Select Date and Time' nav={navigation} />
 
                     <View style={styles.DateAndTimeContainerBackround}>
                         <View style={styles.DateAndTimeContainer}>
-                            <ScrollView>
-                                {/* <Calendar handleGetDateCallBack={getDateCallBack} /> */}
-                                <TimeSlots userServices={services} handleGetTimeCallBack={getTimeCallBack} />
-                            </ScrollView>
+                            {/* <ScrollView> */}
+                            {/* <Calendar handleGetDateCallBack={getDateCallBack} /> */}
+                            <TimeSlots userServices={services} handleGetTimeCallBack={getTimeCallBack} />
+                            {/* </ScrollView> */}
 
                         </View>
 

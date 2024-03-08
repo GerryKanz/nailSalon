@@ -1,54 +1,40 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Dimensions, StyleSheet } from 'react-native'
-import React from 'react'
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react'
+import Header from '../../Components/Header';
+import SelectedServices from '../../Components/SelectedServicesComponent';
 
 const screen = Dimensions.get('screen')
 
 export default function ConfirmationScreen({ route, navigation }) {
+
     const { services } = route.params;
 
     return (
         <View style={styles.container}>
             <SafeAreaView>
 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back-outline" size={24} color="black" />
-                    <Text>Booking</Text>
-                </TouchableOpacity>
+                <Header name='Selected Services' nav={navigation} />
 
                 <View style={styles.services}>
 
-                    <View style={styles.headerContainer}>
-                        <Text>Your Services</Text>
-                    </View>
-
-                    {/* display user selected services  */}
-                    <View style={styles.servicesListContainer}>
-                        <View>
-                            {
-                                services.map((service, i) => (<View style={styles.selectedServicesDisplay}>
-                                    <Text key={i} style={styles.text} >{service.title}</Text>
-                                    <Text style={styles.text} >{service.duration} min</Text>
-                                    <Text style={styles.text} >{service.price}</Text>
-                                </View>
-                                ))
-                            }
-                        </View>
-                    </View>
+                    <SelectedServices services={services} title='Your Services' />
 
                     {/* add services or continue button  */}
                     <View style={styles.buttonsContainer}>
-                        <Text>Add another service or continue with these selections.</Text>
+                        <View style={styles.buttonHeader}>
+                            <Text style={[styles.text, { fontSize: 18, fontWeight: '200' }]}>Edit services or continue.</Text>
+                        </View>
+
                         <View style={styles.buttons}>
 
                             {/* add services button  */}
                             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                                <Text style={styles.button}>Add</Text>
+                                <Text style={[styles.button, styles.text]}>Edit</Text>
                             </TouchableOpacity>
 
                             {/* continue button, navigates to the booking screen passing user selected services as a route parameter */}
                             <TouchableOpacity onPress={() => navigation.navigate('booking', { services: services })} style={styles.backButton}>
-                                <Text style={styles.button}>Continue</Text>
+                                <Text style={[styles.button, styles.text]}>Continue</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -75,20 +61,33 @@ const styles = StyleSheet.create({
     },
     servicesListContainer: {
         display: 'flex',
-        gap: 20,
-        marginTop: 40
+        justifyContent: 'space-between',
+        marginTop: 20
     },
     headerContainer: {
-        marginTop: 30,
-        alignItems: 'center'
+        marginTop: 10,
+        marginBottom: 20,
+        paddingBottom: 5,
+        alignItems: 'center',
+        borderBottomWidth: 0.2,
+        borderBottomColor: 'orange'
+    },
+
+    buttonHeader: {
+        paddingBottom: 5,
+        alignItems: 'center',
+        borderBottomWidth: 0.2,
+        borderBottomColor: 'orange',
+        width: screen.width * 0.9
     },
 
     buttonsContainer: {
-        marginTop: 100,
+        marginTop: 50,
         alignItems: 'center',
+        alignSelf: 'center',
     },
     buttons: {
-        marginTop: 40,
+        marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -104,11 +103,34 @@ const styles = StyleSheet.create({
     selectedServicesDisplay: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginBottom: 20
+        marginBottom: 20,
+    },
+
+    title: {
+        textAlign: 'center',
+        fontSize: 25,
+        fontWeight: '200',
     },
 
     text: {
+        fontSize: 16,
+        fontWeight: '300'
+    },
+    servicesContainer: {
+        marginTop: 30,
+        width: screen.width,
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 5,
     }
+
 
 })

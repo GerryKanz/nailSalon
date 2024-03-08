@@ -1,41 +1,88 @@
 import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import dataAPI from '../../DataAPI/dataAPI';
+import Header from '../../Components/Header';
+import { useUser } from '@clerk/clerk-expo';
+import UserBooking from '../../Components/userBookingComponent';
+import { useIsFocused } from '@react-navigation/native';
 
-
+const screen = Dimensions.get('screen')
 
 export default function UserBookingsScreen({ navigation }) {
+    //hooks and state declarations
+    const isFocused = useIsFocused()
+    const [bookingHistory, setBookingHistory] = useState([])
+    const [filteredBookings, setFilteredBookings] = useState([])
+    const { user } = useUser();
+
+    //call Data API and returns user bookings data
+    const getUserBookingData = () => {
+        dataAPI.getUserBookings(user.id).then((resp) => {
+
+            setBookingHistory(resp.bookings)
+
+        })
+    }
+
+    let filteredRes = []
+    useEffect(() => {
+        if (bookingHistory.length > 0) {
+            for (let i = 0; i < bookingHistory.length; i++) {
+                if (i === bookingHistory.length - 1) {
+                    filteredRes.push(bookingHistory[i])
+                } else if (bookingHistory[i].bookingId === bookingHistory[i + 1].bookingId) {
+                    continue
+                } else {
+                    filteredRes.push(bookingHistory[i])
+                }
+            }
+        }
+        console.log(filteredRes)
+        setFilteredBookings(filteredRes)
+    }, [bookingHistory])
+
+
+
+
+    //Cause an API call once when isFocused changes
+    useEffect(() => {
+        if (isFocused) {
+            getUserBookingData()
+        }
+    }, [isFocused])
 
 
     return (
         <View style={styles.container}>
-            <SafeAreaView  >
+            <SafeAreaView >
                 <View>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back-outline" size={24} color="black" />
-                        <Text>Your services</Text>
-                    </TouchableOpacity>
+                    <Header name='Booking Appointments' nav={navigation} />
                 </View>
 
                 <View style={styles.bookingsBackground}>
-                    <View style={styles.headerMessege}>
-                        <Text>Thank you for booking with us</Text>
-                    </View>
-                    <View style={styles.bookings}>
-                        <View style={styles.booking}>
-                            <Text>Pedicure: Example booking</Text>
+                    <ScrollView>
+                        <View style={styles.scrollableHeight}>
+                            <View style={styles.headerMessege}>
+                                <Text style={styles.headerText}>Thank you for booking with us</Text>
+                            </View>
+
+                            {
+                                filteredBookings.map((booking, index) => (
+
+                                    <View key={index}>
+                                        <UserBooking
+                                            service={booking.service}
+                                            duration={booking.duration}
+                                            date={booking.date}
+                                            time={booking.time} />
+                                    </View>
+                                ))
+                            }
                         </View>
-                        <View style={styles.booking}>
-                            <Text>Pedicure: Example booking1</Text>
-                        </View>
-                        <View style={styles.booking}>
-                            <Text>Pedicure: Example booking2</Text>
-                        </View>
-                        <View style={styles.booking}>
-                            <Text>Pedicure: Example booking3</Text>
-                        </View>
-                    </View>
+                    </ScrollView>
                 </View>
+
 
             </SafeAreaView>
         </View>
@@ -53,28 +100,23 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     headerMessege: {
-        marginTop: 20,
-        marginBottom: 20,
-        marginLeft: 20
+        marginTop: 30,
+        borderBottomColor: 'lightgrey',
+        borderBottomWidth: 0.5,
+        paddingBottom: 10,
+        marginBottom: 25,
+        alignSelf: 'center',
+    },
+
+    headerText: {
+        fontSize: 16,
+        fontWeight: '100'
     },
     bookingsBackground: {
         backgroundColor: 'white',
         height: 1000
     },
-    bookings: {
-        height: 500,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-evenly'
-    },
-    booking: {
-        width: 350,
-        alignItems: 'center',
-        alignSelf: 'center',
-        borderWidth: 1,
-        borderColor: 'orange',
-        borderRadius: 10,
-        marginBottom: 10,
-        flex: 1
+    scrollableHeight: {
+        marginBottom: screen.height * 0.5
     }
 })

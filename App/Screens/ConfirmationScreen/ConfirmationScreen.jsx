@@ -2,21 +2,28 @@ import { View, Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Dime
 import { React, useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import dataAPI from '../../DataAPI/dataAPI';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, CommonActions } from '@react-navigation/native';
+import { useUser } from "@clerk/clerk-expo";
+import Header from '../../Components/Header';
+import UserBooking from '../../Components/userBookingComponent';
+import SelectedServices from '../../Components/SelectedServicesComponent';
+import DateDisplayFormat from '../../Components/DateDisplay';
 
 const screen = Dimensions.get('screen')
 
 export default function ConfirmationScren() {
+    const { user } = useUser();
+
 
     //variable declaration
     const [name, setName] = useState()
-    const [email, setEmail] = useState();
+    const [email, setEmail] = useState()
     const navigation = useNavigation()
     const route = useRoute()
     const time = route.params.time
     const date = route.params.date
     const userServices = route.params.userServices
-    const bookingId = email + date + time;
+
 
     console.log(userServices[0].duration.toString())
 
@@ -27,16 +34,30 @@ export default function ConfirmationScren() {
         'Confirmed',
         'Booking Successful, please check your email for more details',
         [{
-            text: 'Home',
-            onPress: () => navigation.navigate('home')
-        }]
+            text: 'Ok',
 
+            //use dispach to instruct a state reset at the to page
+            onPress: () => navigation.dispatch(CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'Home' }]
+
+            }))
+        }]
     )
+
+    console.log('User services _____', userServices)
+    console.log(user.primaryEmailAddress.emailAddress)
 
     const handleTimeAndDate = () => {
 
-        const data = { name: name, email: email, selectedDate: date, selectedTime: time, duration: userServices[0].duration, service: userServices[0].title, bookingId: bookingId }
+        //create a booking id, using service id, date and time.
+        //remove - and : from date and time strings
+        const bookingId = (userServices[0].id + date + time).replace(/[-:]/g, '')
 
+        //create a constant variable that stores booking data
+        const data = { userId: user.id, email: user.primaryEmailAddress.emailAddress, selectedDate: date, selectedTime: time, duration: userServices[0].duration, service: userServices[0].title, bookingId: bookingId }
+
+        //call a function in dataAPI and parse the data object to it to instantiate a booking in the database
         const enterBooking = (complete) => {
             dataAPI.createBooking(data).then(resp => {
                 complete ? SuccessMessage() : undefined
@@ -86,75 +107,55 @@ export default function ConfirmationScren() {
         } else {
             enterBooking(true)
         }
-
     }
 
     return (
-        <SafeAreaView>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Ionicons name="arrow-back-outline" size={24} color="black" />
-                <Text>Booking</Text>
-            </TouchableOpacity>
-            <View style={styles.heading}>
+        <View style={styles.container}>
+            <SafeAreaView>
 
-                <Text style={{ textAlign: 'center' }}>Enter your Name and Email to complete booking</Text>
+                {/* Header Component  */}
+                <Header name='Confirm Booking' nav={navigation} />
 
-                <View style={styles.inputFields}>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={setName}
-                        placeholder='User Name'
-                        value={name}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={setEmail}
-                        placeholder='Email'
-                        value={email}
-                    />
-                    <TouchableOpacity style={{ alignSelf: 'center' }}
-                        onPress={() => handleTimeAndDate()}>
-                        <Text style={styles.submitAndConfirmButton}>Submit and Confirm your Booking</Text>
-                    </TouchableOpacity>
+                {/* Body  */}
+                <View style={styles.bodyBackground}>
+                    <View>
+
+                        <Text style={{ textAlign: 'center' }}></Text>
+
+                        <View>
+
+                            <SelectedServices services={userServices}
+                                date={DateDisplayFormat(date)}
+                                time={time}
+                                title='Booking summary' />
+
+                            <TouchableOpacity style={{ alignSelf: 'center' }}
+                                onPress={() => handleTimeAndDate()}>
+                                <Text style={styles.submitAndConfirmButton}>Confirm and Complete Booking</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    heading: {
-        paddingTop: 100,
+    container: {
+        backgroundColor: color = 'rgba(255, 167, 64, 0.1)',
     },
-    backButton: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingBottom: 10,
-        gap: 10,
+    bodyBackground: {
+        backgroundColor: 'white',
+        height: 1000
     },
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        borderColor: 'orange',
-        borderRadius: 5,
-        padding: 10,
-        width: screen.width / 1.06
-    },
-    inputFields: {
-        marginTop: 50
 
-    },
     submitAndConfirmButton: {
         backgroundColor: color = 'rgba(255, 167, 64, 100)',
         textAlign: 'center',
         marginTop: 50,
         borderWidth: 1,
         borderColor: 'orange',
-        borderRadius: 5,
-        padding: 10,
-        width: screen.width / 1.06
-
+        padding: 15
     }
 })

@@ -1,6 +1,8 @@
 import { request, gql } from 'graphql-request'
+import { useUser } from '@clerk/clerk-expo'
 
-const API_URL = 'https://api-ap-northeast-1.hygraph.com/v2/cls7wg35p14e201w3b5ot3q7w/master'
+
+const API_URL = process.env.API_URL
 
 const createBooking = async (bookingData) => {
 
@@ -12,7 +14,7 @@ const createBooking = async (bookingData) => {
                  time: "`+ bookingData.selectedTime + `",
                  userBookings: Booked, 
                  userEmail: "`+ bookingData.email + `", 
-                 userName: "`+ bookingData.name + `",
+                 userId: "`+ bookingData.userId + `",
                  duration:  `+ bookingData.duration + `,
                  service: "`+ bookingData.service + `",
                  bookingId: "`+ bookingData.bookingId + `"}
@@ -37,13 +39,29 @@ const getBookingsByDate = async (date) => {
           }
       }
     `
-
   const result = await request(API_URL, query)
   console.log(result)
   return result
 }
 
+const getUserBookings = async (userId) => {
+  const query = gql`
+  query getUserBooking{
+    bookings(where: {userId: "`+ userId + `"}) {
+      bookingId
+      date
+      duration
+      service
+      time
+    }
+  }
+  `
+  const result = await request(API_URL, query)
+  return result
+}
+
 export default {
   createBooking,
-  getBookingsByDate
+  getBookingsByDate,
+  getUserBookings
 }

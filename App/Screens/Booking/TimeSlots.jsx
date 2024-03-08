@@ -89,7 +89,7 @@ export default function TimeSlots(props) {
                 {/* Map dictionary values to Text components */}
                 {Object.keys(availableSlots).map((timeOfDay, i) => (
                     <View key={'timeofday' + i}>
-                        <Text style={[styles.timeOfDay, styles.stickyHeader]}>{timeOfDay}</Text>
+                        <Text style={[styles.timeOfDay]}>{timeOfDay}</Text>
                         <View style={styles.timeSlots}>
 
                             {/* checks if a slot is in booked slots array, if it is, then its booked, it will not be displayed */}
@@ -97,16 +97,16 @@ export default function TimeSlots(props) {
 
                                 props.userServices[0].duration > 30 && availableSlots[timeOfDay].includes(adjustTime(time)) ?
 
-                                    (< TouchableOpacity onPress={() => { setTime(time) }}>
-                                        <Text key={j} style={styles.timeText}>
+                                    (< TouchableOpacity key={j} onPress={() => { setTime(time) }}>
+                                        <Text style={styles.timeText}>
                                             {time}
                                         </Text>
                                     </TouchableOpacity>) :
 
 
                                     props.userServices[0].duration < 60 ?
-                                        (< TouchableOpacity onPress={() => { setTime(time) }}>
-                                            <Text key={j} style={styles.timeText}>
+                                        (< TouchableOpacity key={j} onPress={() => { setTime(time) }}>
+                                            <Text style={styles.timeText}>
                                                 {time}
                                             </Text>
                                         </TouchableOpacity>) : undefined
@@ -125,20 +125,28 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     timeContainer: {
-        paddingBottom: screen.height * 0.68
+        paddingBottom: screen.height * 0.25
+
     },
     timeOfDay: {
-        marginTop: 35,
-        paddingBottom: 10,
+        marginTop: 22,
+        paddingBottom: 8,
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: '300',
+        fontSize: 18
     },
+
     timeSlots: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: '10',
         justifyContent: 'flex-start',
+        borderTopColor: '##D3D3D3',
+        borderTopWidth: 0.6,
+        paddingTop: 15,
+        height: 60
+
 
     },
     timeText: {

@@ -2,20 +2,25 @@ import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-na
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import ServicesCell from './ServicesCell';
+import Header from '../../Components/Header';
 
 export default function ServicesScreen({ route, navigation }) {
+    let bookingComplete = ''
+
+    if (route.params) {
+        bookingComplete = route.params.bookingComplete
+        console.log('booking complete_______', bookingComplete)
+    }
+
 
     return (
         <View style={styles.container}>
 
             <SafeAreaView>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back-outline" size={24} color="black" />
-                    <Text>Select Services</Text>
-                </TouchableOpacity>
+                <Header name='Select Services' nav={navigation} />
 
                 <View style={styles.services}>
-                    <ServicesCell />
+                    <ServicesCell bookingComplete={bookingComplete} />
                 </View>
             </SafeAreaView>
 

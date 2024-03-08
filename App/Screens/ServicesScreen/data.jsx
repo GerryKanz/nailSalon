@@ -1,6 +1,5 @@
 export default function Data() {
 
-
     return (menuItems = {
         items: [
             {
@@ -13,9 +12,11 @@ export default function Data() {
                         "discription": [
                             "Most popular and well known option"
                         ],
-                        "price": ['$30'
+                        "price": [30
                         ],
-                        "serviceDuration": 60
+                        "duration": 60,
+                        "id": "1qkz97"
+
                     },
                     {
                         "title": [
@@ -24,9 +25,10 @@ export default function Data() {
                         "discription": [
                             "Add on to standard pedicure, uses paraffin wax to moisturise and soften the feet"
                         ],
-                        "price": ['$30'
+                        "price": [30
                         ],
-                        "serviceDuration": 30
+                        "duration": 30,
+                        "id": "3m2u5p"
                     },
                     {
                         "title": [
@@ -35,9 +37,10 @@ export default function Data() {
                         "discription": [
                             "A perfect slurge if you want something more luxurious"
                         ],
-                        "price": ['$60'
+                        "price": [60
                         ],
-                        "serviceDuration": 60
+                        "duration": 60,
+                        "id": "9ahs8r"
                     }
                 ]
             },
@@ -51,9 +54,10 @@ export default function Data() {
                         "discription": [
                             "Enim nostrud pariatur consectetur magna aute incididuntr."
                         ],
-                        "price": ['$$$'
+                        "price": [25
                         ],
-                        "serviceDuration": 30
+                        "duration": 30,
+                        "id": "5vzdpf"
                     },
                     {
                         "title": [
@@ -62,9 +66,10 @@ export default function Data() {
                         "discription": [
                             "Occaecat id amet laboris quis nisi cillum."
                         ],
-                        "price": ['$$$'
+                        "price": [20
                         ],
-                        "serviceDuration": 60
+                        "duration": 60,
+                        "id": "7n1c9x"
                     },
                     {
                         "title": [
@@ -73,9 +78,10 @@ export default function Data() {
                         "discription": [
                             "Dolore eu Lorem deserunt proident eu labore consequat officia pariatur sunt."
                         ],
-                        "price": ['$$$'
+                        "price": [35
                         ],
-                        "serviceDuration": 30
+                        "duration": 30,
+                        "id": "2z8x6q"
                     }
                 ]
             },
@@ -89,9 +95,10 @@ export default function Data() {
                         "discription": [
                             "In do esse velit incididunt anim esse et officia."
                         ],
-                        "price": ['$$$'
+                        "price": [10
                         ],
-                        "serviceDuration": 30
+                        "duration": 30,
+                        "id": "4e9u3w"
                     },
                     {
                         "title": [
@@ -100,9 +107,10 @@ export default function Data() {
                         "discription": [
                             "Enim nostrud pariatur consectetur magna aute incididuntr."
                         ],
-                        "price": ['$$$'
+                        "price": [8
                         ],
-                        "serviceDuration": 30
+                        "duration": 30,
+                        "id": "6p5m7k"
                     },
                     {
                         "title": [
@@ -111,9 +119,10 @@ export default function Data() {
                         "discription": [
                             "Incididunt sint commodo pariatur sunt sint est."
                         ],
-                        "price": ['$$$'
+                        "price": [10
                         ],
-                        "serviceDuration": 30
+                        "duration": 30,
+                        "id": "8j4r2v"
                     }
                 ]
             }

@@ -9,18 +9,25 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "^0.20.5",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "date-fns": "^3.3.1",
     "expo": "~50.0.4",
+    "expo-secure-store": "^12.8.1",
     "expo-status-bar": "~1.11.1",
     "graphql": "^15.8.0",
     "graphql-request": "^6.1.0",
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-calendar-picker": "^8.0.1",
-    "react-native-tableview-simple": "^4.4.0"
+    "react-native-tableview-simple": "^4.4.0",
+    "expo-image-picker": "~14.7.1",
+    "expo-file-system": "~16.0.6",
+    "expo-media-library": "~15.9.1",
+    "expo-image-manipulator": "~11.8.0",
+    "expo-checkbox": "~2.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
