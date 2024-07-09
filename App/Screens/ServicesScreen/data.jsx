@@ -49,7 +49,7 @@ export default function Data() {
                 "contents": [
                     {
                         "title": [
-                            "Flat white"
+                            "French Manicure"
                         ],
                         "discription": [
                             "Enim nostrud pariatur consectetur magna aute incididuntr."
@@ -61,7 +61,7 @@ export default function Data() {
                     },
                     {
                         "title": [
-                            "Latte"
+                            "Acrilyc Manicure"
                         ],
                         "discription": [
                             "Occaecat id amet laboris quis nisi cillum."
@@ -73,7 +73,7 @@ export default function Data() {
                     },
                     {
                         "title": [
-                            "Caffe Americano"
+                            "Shellac Manicure"
                         ],
                         "discription": [
                             "Dolore eu Lorem deserunt proident eu labore consequat officia pariatur sunt."
@@ -90,7 +90,7 @@ export default function Data() {
                 "contents": [
                     {
                         "title": [
-                            "Shoyu Ramen"
+                            "Paraffin Treatments"
                         ],
                         "discription": [
                             "In do esse velit incididunt anim esse et officia."
@@ -102,7 +102,7 @@ export default function Data() {
                     },
                     {
                         "title": [
-                            "Tonkatsu"
+                            "Nail art"
                         ],
                         "discription": [
                             "Enim nostrud pariatur consectetur magna aute incididuntr."
@@ -114,7 +114,7 @@ export default function Data() {
                     },
                     {
                         "title": [
-                            "Miso Ramen"
+                            "Hand Massage"
                         ],
                         "discription": [
                             "Incididunt sint commodo pariatur sunt sint est."

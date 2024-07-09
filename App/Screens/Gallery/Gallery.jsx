@@ -5,6 +5,7 @@ import Header from "../../Components/Header";
 const screen = Dimensions.get('screen')
 
 export default Gallery = ({ navigation }) => {
+    //image data
     const galleryData =
         [
             {
@@ -41,7 +42,7 @@ export default Gallery = ({ navigation }) => {
 
         ]
 
-
+    //renders images to the screen
     return (
         <View style={styles.container}>
             <SafeAreaView >
@@ -49,11 +50,6 @@ export default Gallery = ({ navigation }) => {
 
                 <View style={styles.contentContainer}>
                     <ScrollView >
-
-                        {/* <View style={styles.titleContainer}>
-                            <Text style={styles.titleText}>Trending Styles</Text>
-                        </View> */}
-
                         <View style={styles.flexContainer}>
                             {
                                 galleryData.map((design, i) => (

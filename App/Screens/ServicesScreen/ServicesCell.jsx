@@ -1,11 +1,3 @@
-// import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
-// import React from 'react'
-// import { TableView, Cell, Section } from 'react-native-tableview-simple'
-
-// const screen = Dimensions.get('screen')
-
-
-
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
@@ -41,19 +33,6 @@ export default function Services(props) {
         setServices(services.filter(service => service.id !== serviceID));
     }
 
-
-    //wrap navigation in useEffect to only navigate when needed variables are populated
-    // useEffect(() => {
-    //     if (services.length > 0) {
-    //         navigation.navigate('seleted_services', {
-    //             services: services
-    //         });
-    //         console.log('state after useEffect: ', services)
-
-    //     }
-    // }, [services, navigation]);
-
-    // set variables to be passed to selected services page on navigation 
     const handleAddService = (service) => {
         setServices(prevService => [...prevService, service])
     }
@@ -144,10 +123,8 @@ const styles = StyleSheet.create({
         marginBottom: screen.height * 0.4
     },
     selectionsButton: {
-        // backgroundColor: 'orange',
         position: 'absolute',
         right: 2,
-        // width: device.width * 0.4,
         alignItems: 'center',
         paddingLeft: 4,
         borderColor: 'orange',

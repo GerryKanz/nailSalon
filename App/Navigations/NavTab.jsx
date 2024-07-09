@@ -14,9 +14,9 @@ import ServicesNav from './ServicesNav';
 
 const Tab = createBottomTabNavigator();
 
+// nav tab which appears at the bottom of the screen
 export default function NavTab() {
     return (
-
         <Tab.Navigator screenOptions={{
             headerShown: false,
             tabBarActiveTintColor: '#0802A3',
@@ -34,15 +34,6 @@ export default function NavTab() {
                 )
             }} name="Home" component={HomeNav} />
 
-
-            <Tab.Screen options={{
-                tabBarLabel: ({ color }) => (
-                    <Text style={{ color: 'black', fontSize: 12 }}>Services</Text>
-                ),
-                tabBarIcon: ({ color, size }) => (
-                    <FontAwesome name="opencart" size={22} color={color} />
-                )
-            }} name="services" component={ServicesNav} />
 
             <Tab.Screen options={{
                 tabBarLabel: ({ color }) => (

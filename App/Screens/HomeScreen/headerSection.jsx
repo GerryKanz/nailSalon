@@ -7,6 +7,7 @@ import { useAuth, useUser } from "@clerk/clerk-expo";
 
 const window = Dimensions.get('window')
 
+//the header section of the homepage
 export default function headerSection() {
     const { isLoaded, signOut } = useAuth();
     const { user } = useUser();
@@ -34,27 +35,14 @@ export default function headerSection() {
                 <Text style={styles.headerText}>Nail Salon Studio</Text>
             </View>
 
-            {/* <View style={{ position: 'absolute', right: 20, top: 8 }}> */}
             <View style={styles.headerIconsContainer}>
-                {/* <View style={styles.icons}> */}
-                {/* <FontAwesome name="shopping-bag" size={22} color="#FFA740" />
-                        <Text style={styles.iconText}>Products</Text> */}
-                {/* </View> */}
-
-                {/* <View style={styles.icons}> */}
-                {/* <FontAwesome6 name="newspaper" size={22} color="#FFA740" />
-                        <Text style={styles.iconText}>Blogs</Text> */}
-                {/* </View> */}
-
                 <TouchableOpacity style={styles.icons} onPress={() => {
                     signOut()
                 }}>
                     <AntDesign name="logout" size={22} color="#FFA740" />
                     <SignOut />
                 </TouchableOpacity>
-
             </View>
-            {/* </View> */}
         </View>
     )
 }
@@ -68,7 +56,6 @@ const styles = StyleSheet.create({
 
     },
     logo: {
-        // flex: 1,
 
     },
     headerText: {
@@ -76,10 +63,7 @@ const styles = StyleSheet.create({
         fontWeight: '200',
     },
     headerIconsContainer: {
-        // display: 'flex',
-        // flexDirection: 'row',
-        // justifyContent: 'space-evenly',
-        // gap: 12
+
     },
     profileImage: {
         width: 50,
@@ -90,7 +74,6 @@ const styles = StyleSheet.create({
         borderRadius: 40,
     },
     profileImgTxtContainer: {
-        // alignSelf: 'baseline',
     },
     profileImageText: {
         fontSize: 12,
@@ -104,7 +87,6 @@ const styles = StyleSheet.create({
     },
 
     iconText: {
-        // paddingTop: 5,
         fontSize: 12,
         fontWeight: '300',
     }

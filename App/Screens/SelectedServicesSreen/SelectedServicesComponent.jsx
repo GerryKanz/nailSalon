@@ -29,8 +29,8 @@ export default function SelectedServices(props) {
                 <View>
                     {
                         props.services.map((service, i) => (
-                            <View>
-                                <View key={i} style={[styles.selectedServicesDisplay]}>
+                            <View key={i}>
+                                <View style={[styles.selectedServicesDisplay]}>
                                     <Text style={[styles.text, { flex: 2 }]} >{service.title}</Text>
                                     <Text style={[styles.text, { flex: 1 }]} >{service.duration} min</Text>
                                     <Text style={[styles.text, { flex: 1, textAlign: 'right' }]} >${service.price}</Text>

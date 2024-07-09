@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import CalendarPicker from "react-native-calendar-picker";
-import TimeSlotsData from './timeSlotsData';
+import TimeSlotsData from '../../DataAPI/timeSlotsData';
 import { useNavigation } from '@react-navigation/native';
 import dataAPI from '../../DataAPI/dataAPI';
 
@@ -9,7 +9,6 @@ const screen = Dimensions.get('screen')
 const timeSlotsData = TimeSlotsData()
 
 export default function TimeSlots(props) {
-    // const userServices = props.userServices
 
     // Declaring react hooks
     const navigation = useNavigation()
@@ -18,7 +17,6 @@ export default function TimeSlots(props) {
     const [booked, setBooked] = useState([])
     const [availableSlots, setAvailableSlots] = useState({})
 
-    console.log("from props.userServices", props.userServices)
 
     // Gets an array of booked times or unavailable timeslots
     const getTimeSlotsData = () => {
@@ -32,11 +30,9 @@ export default function TimeSlots(props) {
                     return !bookedSlots.bookings.some(booked => Object.values(booked).includes(booking))
                 })
             })
-            console.log('available bookings', availableBookings)
             setAvailableSlots(availableBookings)
         })
     }
-    console.log('available bookings', availableSlots)
 
     //check if there is enough time for a slot to be bookable
     const adjustTime = (bookedTime) => {
@@ -69,7 +65,6 @@ export default function TimeSlots(props) {
         // navigate to confirmation screen 
         if (selectedDate != undefined & selectedTime != undefined) {
             navigation.navigate('confirmation', { time: selectedTime, date: selectedDate.toISOString().split('T')[0], userServices: props.userServices });
-            console.log('state after useEffect: ', selectedDate)
         }
     }, [selectedDate, selectedTime, navigation]);
 

@@ -6,7 +6,7 @@ import { useRoute, useNavigation, CommonActions } from '@react-navigation/native
 import { useUser } from "@clerk/clerk-expo";
 import Header from '../../Components/Header';
 import UserBooking from '../../Components/userBookingComponent';
-import SelectedServices from '../../Components/SelectedServicesComponent';
+import SelectedServices from '../SelectedServicesSreen/SelectedServicesComponent';
 import DateDisplayFormat from '../../Components/DateDisplay';
 
 const screen = Dimensions.get('screen')
@@ -24,11 +24,6 @@ export default function ConfirmationScren() {
     const date = route.params.date
     const userServices = route.params.userServices
 
-
-    console.log(userServices[0].duration.toString())
-
-    console.log(Number.isInteger(userServices[0].duration))
-
     //message is a booking is successful called if there is a success response from the database
     const SuccessMessage = () => Alert.alert(
         'Confirmed',
@@ -45,8 +40,6 @@ export default function ConfirmationScren() {
         }]
     )
 
-    console.log('User services _____', userServices)
-    console.log(user.primaryEmailAddress.emailAddress)
 
     const handleTimeAndDate = () => {
 
@@ -55,7 +48,7 @@ export default function ConfirmationScren() {
         const bookingId = (userServices[0].id + date + time).replace(/[-:]/g, '')
 
         //create a constant variable that stores booking data
-        const data = { userId: user.id, email: user.primaryEmailAddress.emailAddress, selectedDate: date, selectedTime: time, duration: userServices[0].duration, service: userServices[0].title, bookingId: bookingId }
+        const data = { userId: user.id, selectedDate: date, selectedTime: time, duration: userServices[0].duration, service: userServices[0].title, bookingId: bookingId }
 
         //call a function in dataAPI and parse the data object to it to instantiate a booking in the database
         const enterBooking = (complete) => {
@@ -85,7 +78,6 @@ export default function ConfirmationScren() {
         }
 
         //execute this part if a booking has a duration of over 30
-        console.log("data passed to the for loop", data.duration)
         if (data.duration > 30) {
             for (i = 0; i < data.duration / 30; i++) {
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View, StyleSheet, Dimensions, Image, Alert } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, StyleSheet, Dimensions, Image, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
-import { Ionicons } from '@expo/vector-icons';
 
 const screen = Dimensions.get('screen')
 
@@ -21,60 +20,68 @@ export default function SignInScreen(props) {
                 identifier: emailAddress,
                 password,
             });
-            // This is an important step,
-            // This indicates the user is signed in
+
+            // Indicates if the user is signed in
             await setActive({ session: completeSignIn.createdSessionId });
         } catch (err) {
             Alert.alert('Wrong Email or Password', 'Please try again')
-            console.log(err);
         }
     };
     return (
-        <View >
-            <View >
-                <Image
-                    source={require('./../../../assets/logo.png')}
-                    style={styles.image}
-                />
-            </View>
+        <View>
+            <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={50}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View>
+                        <View >
+                            <Image
+                                source={require('./../../../assets/logo.png')}
+                                style={styles.image}
+                            />
+                        </View>
 
-            <View style={styles.welcome}>
-                <Text style={styles.welcomeText}> Welcome</Text>
-                <Text style={styles.welcomeText}> Nail Salon Studio </Text>
-            </View>
+                        <View style={styles.welcome}>
+                            <Text style={styles.welcomeText}> Welcome</Text>
+                            <Text style={styles.welcomeText}> Nail Salon Studio </Text>
+                        </View>
 
-            <View style={styles.inputFields}>
-                <View style={styles.Input}>
-                    <TextInput
-                        autoCapitalize="none"
-                        value={emailAddress}
-                        placeholder="Email..."
-                        onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-                    />
-                </View>
+                        <KeyboardAvoidingView>
 
-                <View style={styles.Input}>
-                    <TextInput
-                        value={password}
-                        placeholder="Password..."
-                        secureTextEntry={true}
-                        onChangeText={(password) => setPassword(password)}
-                    />
-                </View>
+                            <View style={styles.inputFields}>
+                                <View style={styles.Input}>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        value={emailAddress}
+                                        placeholder="Email..."
+                                        onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
+                                    />
+                                </View>
 
-                <TouchableOpacity style={{ backgroundColor: 'orange', borderRadius: 5 }} onPress={onSignInPress}>
-                    <Text style={styles.signInButton}>Sign in</Text>
-                </TouchableOpacity>
+                                <View style={styles.Input}>
+                                    <TextInput
+                                        value={password}
+                                        placeholder="Password..."
+                                        secureTextEntry={true}
+                                        onChangeText={(password) => setPassword(password)}
+                                    />
+                                </View>
+
+                                <TouchableOpacity style={{ backgroundColor: 'orange', borderRadius: 5 }} onPress={onSignInPress}>
+                                    <Text style={styles.signInButton}>Sign in</Text>
+                                </TouchableOpacity>
 
 
-                <View style={styles.signUpTextContainer}>
-                    <Text>You dont have an account?</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.signUpText} onPress={() => props.signUp()}>SignUp</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+                                <View style={styles.signUpTextContainer}>
+                                    <Text>You dont have an account?</Text>
+                                    <TouchableOpacity>
+                                        <Text style={styles.signUpText} onPress={() => props.signUp()}>SignUp</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </KeyboardAvoidingView>
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </View >
     );
 }
 

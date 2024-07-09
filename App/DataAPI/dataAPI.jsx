@@ -2,18 +2,16 @@ import { request, gql } from 'graphql-request'
 import { useUser } from '@clerk/clerk-expo'
 
 
-const API_URL = process.env.API_URL
+const API_URL = 'https://api-ap-northeast-1.hygraph.com/v2/cls7wg35p14e201w3b5ot3q7w/master'
 
 const createBooking = async (bookingData) => {
 
-  console.log('this is booking data: ', bookingData)
   const createBookingQuery = gql`
     mutation CreateBooking {
         createBooking(
           data: {date: "`+ bookingData.selectedDate + `",
                  time: "`+ bookingData.selectedTime + `",
                  userBookings: Booked, 
-                 userEmail: "`+ bookingData.email + `", 
                  userId: "`+ bookingData.userId + `",
                  duration:  `+ bookingData.duration + `,
                  service: "`+ bookingData.service + `",
@@ -21,16 +19,15 @@ const createBooking = async (bookingData) => {
         ) {
           id
         }
-        publishManyBookings(to: PUBLISHED) {
-            count
-          }
+        publishManyBookings(where: {bookingId: "`+ bookingData.bookingId + `"}) {
+    count
+  }
       }
     `
   const result = await request(API_URL, createBookingQuery)
 }
 
 const getBookingsByDate = async (date) => {
-  console.log("The date before query", typeof (date))
   const query = gql`
     query GetBookingsByDate {
         bookings(where: {date: "`+ date + `"}) {
@@ -40,7 +37,6 @@ const getBookingsByDate = async (date) => {
       }
     `
   const result = await request(API_URL, query)
-  console.log(result)
   return result
 }
 
@@ -60,8 +56,26 @@ const getUserBookings = async (userId) => {
   return result
 }
 
+const updateCanceletion = async (bookingId) => {
+  const updateBookingQuery = gql`
+  mutation updateBooking {
+    unpublishManyBookings(where: {bookingId: "`+ bookingId + `"}) {
+      count
+    }
+    updateManyBookings(
+      data: {userBookings: Canceled}
+      where: {bookingId: "`+ bookingId + `"}
+    ) {
+      count
+    }
+  }
+  `
+  const result = await request(API_URL, updateBookingQuery)
+}
+
 export default {
   createBooking,
   getBookingsByDate,
-  getUserBookings
+  getUserBookings,
+  updateCanceletion
 }

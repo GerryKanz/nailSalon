@@ -15,8 +15,13 @@ const Stack = createStackNavigator()
 
 export default function HomeNav() {
     return (
+
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name='home' component={HomeScreen} />
+            <Stack.Screen name='services' component={ServicesScreen} />
+            <Stack.Screen name='seleted_services' component={SelectedServicesScreen} />
+            <Stack.Screen name='booking' component={BookingScreen} />
+            <Stack.Screen name='confirmation' component={ConfirmationScreen} />
             <Stack.Screen name='product' component={ProductScreen} />
             <Stack.Screen name='gallery' component={Gallery} />
         </Stack.Navigator >

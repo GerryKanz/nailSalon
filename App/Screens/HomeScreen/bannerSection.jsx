@@ -8,6 +8,7 @@ const screen = Dimensions.get('screen')
 export default function headerSection() {
     const navigation = useNavigation()
 
+    //producta data displayed on the homescreen
     const productData = [
         {
             img: require('../../../assets/vecteezy_ai-generated-shiny-container-decorated-nail-polish_35497782.png'),
@@ -50,28 +51,9 @@ export default function headerSection() {
     return (
         <View>
             <View style={styles.container}>
-                {/* <Image source={require('../../../assets/allison-christine-0gTyPRZXnho-unsplash.jpg')}
-                    style={styles.bannerImage} /> */}
             </View>
 
             <View style={styles.flexContainer}>
-
-                {/* <Text style={styles.bannerheader}> Studio </Text> */}
-                {/* <Text style={styles.yearText}> S p r i n g   2 0 2 4</Text> */}
-
-                {/* <TouchableOpacity onPress={() => navigation.push('services')} style={styles.galleryButton}>
-                <Text style={styles.servicesText}>Services</Text>
-            </TouchableOpacity> */}
-
-                {/* <View style={{
-                height: screen.height * 0.3, width: screen.width * 0.8, borderColor: 'orange', backgroundColor: 'white', borderTopRightRadius: 20, borderTopLeftRadius: 20,
-                marginTop: 10, alignSelf: 'center'
-            }}>
-
-                <Image source={require('../../../assets/allison-christine-0gTyPRZXnho-unsplash.jpg')}
-                    style={styles.bannerImage} />
-
-            </View> */}
                 <View style={[styles.midsection, { flex: 1.2, display: 'flex', flexDirection: 'row', gap: 5 }]}>
 
                     <View style={{ marginLeft: 10 }}>
@@ -157,12 +139,6 @@ const styles = StyleSheet.create({
     },
 
     topCard: {
-        // height: screen.height * 0.3,
-        // borderColor: 'orange',
-        // backgroundColor: 'white',
-        // borderTopRightRadius: 20,
-        // borderTopLeftRadius: 20,
-        // borderRadius: 20
     },
     midsection: {
         backgroundColor: '#fff',
@@ -174,28 +150,10 @@ const styles = StyleSheet.create({
 
     productSection: {
         backgroundColor: '#fff',
-        // width: screen.width * 0.96,
         marginTop: 5,
         borderRadius: 10,
         flex: 2.2
     },
-
-    // card: {
-    //     backgroundColor: '#fff',
-    //     width: screen.width * 0.5,
-    //     borderRadius: 10,
-    //     paddingTop: 20,
-    //     marginVertical: 15,
-    //     marginLeft: 10,
-    //     shadowColor: '#000',
-    //     shadowOffset: {
-    //         width: 0,
-    //         height: 2,
-    //     },
-    //     shadowOpacity: 0.25,
-    //     shadowRadius: 3.84,
-    //     elevation: 5
-    // },
     title: {
         fontSize: 20,
         fontWeight: '300',
@@ -253,7 +211,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         bottom: 0,
-        // backgroundColor: 'orange',
         borderColor: 'orange',
         borderWidth: 1,
         alignItems: 'center',

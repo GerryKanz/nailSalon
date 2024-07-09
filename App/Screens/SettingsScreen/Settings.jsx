@@ -1,19 +1,13 @@
-import { ScrollView, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, SafeAreaView, Alert, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Cell, Section, TableView } from 'react-native-tableview-simple'
-import { Clerk, useAuth, useUser } from "@clerk/clerk-expo";
-import { MaterialIcons } from '@expo/vector-icons';
+import { useAuth, useUser } from "@clerk/clerk-expo";
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import DeleteAccount from './DeleteAccont';
 import Header from '../../Components/Header';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system'
 import * as MediaLibrary from 'expo-media-library';
-import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
-
-
-
 
 const screen = Dimensions.get('screen')
 
@@ -23,7 +17,9 @@ export default function SettingsScreen({ route, navigation }) {
     const { user } = useUser();
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
     const [image, setImage] = useState("");
+    const [imageSet, setImageSet] = useState(true)
 
+    //encode image uri to base64 
     const encodeImageToBase64 = async (imageUri) => {
         try {
             const { uri } = await FileSystem.getInfoAsync(imageUri);
@@ -37,6 +33,12 @@ export default function SettingsScreen({ route, navigation }) {
             return null;
         }
     };
+
+    //function wraps a function that sets profile image. The function only takes the image in base64
+    useEffect(() => {
+        onSave().then(() => setImageSet(true))
+
+    }, [image])
 
     const onSave = async () => {
         if (!image || !user) return;
@@ -80,14 +82,6 @@ export default function SettingsScreen({ route, navigation }) {
     //Update profile photo
     const handleImageUpload = async () => {
 
-        //Declare a variable options for the image picker
-        // const options = ImagePicker.ImagePickerOptions = {
-        //     mediaTypes: ImagePicker.MediaTypeOptions.Images = "Images",
-        //     allowsEditing: true,
-        //     aspect: [4, 3],
-        //     quality: 1,
-        // }
-
         //Allow user to choose where they want to upload a photo from
         Alert.alert('Upload Photo', 'Upload photo from', [
             {
@@ -99,7 +93,7 @@ export default function SettingsScreen({ route, navigation }) {
 
         // Choose a photo from device gallery
         const uploadFromGallery = async () => {
-            // await ImagePicker.requestMediaLibraryPermissionsAsync()
+            await ImagePicker.requestMediaLibraryPermissionsAsync()
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
@@ -110,12 +104,8 @@ export default function SettingsScreen({ route, navigation }) {
             // Check if an image was selected
             if (!result.canceled && result.assets.length > 0 && result.assets[0].uri !== undefined) {
                 setImage(result.assets[0].uri)
-                await onSave()
             }
         }
-
-
-
 
         // Use device camera to take a photo
         const uploadFromCamera = async () => {
@@ -125,14 +115,11 @@ export default function SettingsScreen({ route, navigation }) {
                 cameraType: ImagePicker.CameraType.front,
                 allowsEditing: true,
                 aspect: [1, 1],
-                quality: 0.75,
+                quality: 0.5,
             })
-            // const base64Img = await FileSystem.readAsStringAsync(result?.assets?.[0].uri, { encoding: FileSystem?.EncodingType?.Base64 });
-            // //save image uri in image state variable
-            // console.log(base64Img)
 
-            // await user?.setProfileImage({ file: base64Img });
-            if (result.assets[0].uri = !undefined) {
+            // Check if an image was selected
+            if (!result.canceled && result.assets.length > 0 && result.assets[0].uri !== undefined) {
                 setImage(result.assets[0].uri)
             }
         }
@@ -146,13 +133,10 @@ export default function SettingsScreen({ route, navigation }) {
                 <View style={styles.componentsContainer}>
                     <View style={styles.profileLogo}>
                         <View style={{ alignItems: 'center' }}>
+
                             <TouchableOpacity onPress={() => { handleImageUpload() }}>
-
-
                                 <Image source={{ uri: user.imageUrl }}
                                     style={styles.profileImage} />
-
-
 
 
                                 <View>

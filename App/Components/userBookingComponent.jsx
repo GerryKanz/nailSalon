@@ -1,9 +1,15 @@
-import React from "react";
-import { View, TouchableOpacity, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet, Dimensions } from "react-native";
 
 const screen = Dimensions.get('screen')
 
 export default userBoking = (props) => {
+
+    //function to cancel user booking
+    const cancelBooking = () => {
+        props.cancel(props.booking.bookingId)
+    }
+
+
     return (
         <View style={styles.booking}>
             <View style={styles.foldedConer}>
@@ -40,7 +46,7 @@ export default userBoking = (props) => {
                 </View>
             </View>
 
-            <View style={[styles.service, { paddingBottom: 30 }]}>
+            <View style={[styles.service]}>
                 <View>
                     <Text style={styles.titleText}>Duration</Text>
                 </View>
@@ -48,11 +54,14 @@ export default userBoking = (props) => {
                     <Text style={styles.duration}>{props.duration} minutes</Text>
                 </View>
             </View>
-            <View style={[styles.service, { paddingBottom: 30 }]}>
-                <View>
-                    <Text style={styles.duration}>{props.price}</Text>
-                </View>
-            </View>
+
+            <TouchableOpacity style={styles.cancelBooking} onPress={() => cancelBooking()}>
+                <Text style={styles.buttonText}>
+                    Cancel
+                </Text>
+            </TouchableOpacity>
+
+
 
         </View>
     )
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
     },
 
     service: {
-        width: 300,
+        width: screen.width * 0.82,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -123,6 +132,16 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.4,
         shadowRadius: 2,
         elevation: 10
+    },
+    cancelBooking: {
+        borderWidth: 1,
+        borderColor: 'orange',
+        backgroundColor: 'orange',
+        padding: 10,
+        marginRight: screen.width * 0.1,
+        marginVertical: 10,
+        borderRadius: 5,
+        alignSelf: 'flex-end'
     }
 
 })

@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Dimensions, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Header from '../../Components/Header';
-import SelectedServices from '../../Components/SelectedServicesComponent';
+import SelectedServices from './SelectedServicesComponent';
 
 const screen = Dimensions.get('screen')
 

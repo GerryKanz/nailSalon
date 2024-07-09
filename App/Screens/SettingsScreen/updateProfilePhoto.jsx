@@ -6,7 +6,6 @@ export default function GetImage() {
     const [image, setImage] = useState(null);
 
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
         await ImagePicker.getMediaLibraryPermissionsAsync()
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images = "Images",

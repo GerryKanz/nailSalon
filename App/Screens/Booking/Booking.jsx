@@ -27,22 +27,16 @@ export default function BookingScreen({ route, navigation }) {
         )
     }
 
+    // renders time slots to the screen
     return (
         <View style={styles.container}>
             <SafeAreaView >
                 <View>
                     <Header name='Select Date and Time' nav={navigation} />
-
                     <View style={styles.DateAndTimeContainerBackround}>
                         <View style={styles.DateAndTimeContainer}>
-                            {/* <ScrollView> */}
-                            {/* <Calendar handleGetDateCallBack={getDateCallBack} /> */}
                             <TimeSlots userServices={services} handleGetTimeCallBack={getTimeCallBack} />
-                            {/* </ScrollView> */}
-
                         </View>
-
-
                     </View>
                 </View>
             </SafeAreaView>

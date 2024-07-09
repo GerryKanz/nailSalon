@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import dataAPI from '../../DataAPI/dataAPI';
@@ -6,6 +6,7 @@ import Header from '../../Components/Header';
 import { useUser } from '@clerk/clerk-expo';
 import UserBooking from '../../Components/userBookingComponent';
 import { useIsFocused } from '@react-navigation/native';
+import DateDisplay from '../../Components/DateDisplay';
 
 const screen = Dimensions.get('screen')
 
@@ -14,14 +15,21 @@ export default function UserBookingsScreen({ navigation }) {
     const isFocused = useIsFocused()
     const [bookingHistory, setBookingHistory] = useState([])
     const [filteredBookings, setFilteredBookings] = useState([])
+    const [toggle, setToggle] = useState(false)
     const { user } = useUser();
 
     //call Data API and returns user bookings data
     const getUserBookingData = () => {
         dataAPI.getUserBookings(user.id).then((resp) => {
-
             setBookingHistory(resp.bookings)
 
+        })
+    }
+
+    //cancel booking and set trigger refresh by setting toggle
+    const cancelBooking = (id) => {
+        dataAPI.updateCanceletion(id).then((resp) => {
+            setToggle(prevToggle => !prevToggle)
         })
     }
 
@@ -45,12 +53,12 @@ export default function UserBookingsScreen({ navigation }) {
 
 
 
-    //Cause an API call once when isFocused changes
+    //Cause an API call once when isFocused and when toggle changes
     useEffect(() => {
         if (isFocused) {
             getUserBookingData()
         }
-    }, [isFocused])
+    }, [isFocused, toggle])
 
 
     return (
@@ -69,13 +77,15 @@ export default function UserBookingsScreen({ navigation }) {
 
                             {
                                 filteredBookings.map((booking, index) => (
-
-                                    <View key={index}>
+                                    < View key={index} >
+                                        {console.log(booking.bookingId)}
                                         <UserBooking
+                                            booking={booking}
                                             service={booking.service}
                                             duration={booking.duration}
-                                            date={booking.date}
-                                            time={booking.time} />
+                                            date={DateDisplay(booking.date)}
+                                            time={booking.time}
+                                            cancel={cancelBooking} />
                                     </View>
                                 ))
                             }
@@ -84,8 +94,8 @@ export default function UserBookingsScreen({ navigation }) {
                 </View>
 
 
-            </SafeAreaView>
-        </View>
+            </SafeAreaView >
+        </View >
     )
 }
 const styles = StyleSheet.create({

@@ -37,12 +37,6 @@ export default Product = ({ route, navigation }) => {
                             <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: '200' }}>All products can only purchased at the store </Text>
                         </View>
                     </View>
-
-
-
-
-
-
                 </View>
             </SafeAreaView>
         </View>
