@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         margin: 20,
-        // backgroundColor: 'rgba(255, 167, 64, 0.5)',
         borderRadius: 30
     },
     productAvailability: {

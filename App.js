@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import NavTab from './App/Navigations/NavTab';
 import { Clerk, ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
 import UserAuthentication from './App/Screens/SignInScreen/UserAuthentication';
@@ -30,20 +31,22 @@ const tokenCache = {
 
 export default function App() {
   return (
-    <ClerkProvider
-      publishableKey={CLERK_PUBLISHABLE_KEY}
-      tokenCache={tokenCache}>
+    <GestureHandlerRootView>
+      <ClerkProvider
+        publishableKey={CLERK_PUBLISHABLE_KEY}
+        tokenCache={tokenCache}>
 
-      <SignedIn>
-        <NavigationContainer>
-          <NavTab />
-        </NavigationContainer>
-      </SignedIn>
+        <SignedIn>
+          <NavigationContainer>
+            <NavTab />
+          </NavigationContainer>
+        </SignedIn>
 
-      <SignedOut>
-        <UserAuthentication />
-      </SignedOut>
-    </ClerkProvider>
+        <SignedOut>
+          <UserAuthentication />
+        </SignedOut>
+      </ClerkProvider>
+    </GestureHandlerRootView>
   );
 }
 
